@@ -61,13 +61,14 @@ if (-not (Test-Server)) {
 }
 
 $states = @(
-    @{ File = '01-home.png';        Url = "$BaseUrl/";                        Desc = '首页 · 三栏工作台' },
-    @{ File = '02-starred.png';     Url = "$BaseUrl/?view=starred";           Desc = '收藏夹视图' },
-    @{ File = '03-detail.png';      Url = "$BaseUrl/?contact=2";              Desc = '联系人详情 · 多联系方式' },
-    @{ File = '04-new-contact.png'; Url = "$BaseUrl/?open=new";               Desc = '新建联系人弹窗' },
-    @{ File = '05-import.png';      Url = "$BaseUrl/?open=import";            Desc = '导入 Excel 弹窗' },
-    @{ File = '06-dark.png';        Url = "$BaseUrl/?theme=dark&view=starred"; Desc = '深色模式' },
-    @{ File = '07-mobile.png';      Url = "$BaseUrl/?contact=2";              Desc = '移动端布局' }
+    @{ File = '01-home.png';           Url = "$BaseUrl/?theme=light";              Desc = '首页 · 三栏工作台' },
+    @{ File = '02-starred.png';        Url = "$BaseUrl/?theme=light&view=starred"; Desc = '收藏夹视图' },
+    @{ File = '03-detail.png';         Url = "$BaseUrl/?theme=light&contact=2";    Desc = '联系人详情 · 多联系方式' },
+    @{ File = '04-new-contact.png';    Url = "$BaseUrl/?theme=light&open=new";     Desc = '新建联系人弹窗' },
+    @{ File = '05-import.png';         Url = "$BaseUrl/?theme=light&open=import";  Desc = '导入 Excel 弹窗' },
+    @{ File = '06-dark.png';           Url = "$BaseUrl/?theme=dark&view=starred";  Desc = '深色模式' },
+    @{ File = '07-mobile.png';         Url = "$BaseUrl/?theme=light";              Desc = '移动端列表' },
+    @{ File = '10-mobile-detail.png';  Url = "$BaseUrl/?theme=light&contact=2";    Desc = '移动端详情抽屉' }
 )
 
 $failures = @()

@@ -42,17 +42,20 @@ npm test                # 17 条用例应全部通过
 
 | 文件名 | 地址 | 画面 |
 | --- | --- | --- |
-| `01-home.png` | `/` | 首页三栏 |
-| `02-starred.png` | `/?view=starred` | 收藏夹 |
-| `03-detail.png` | `/?contact=2` | 联系人详情 |
-| `04-new-contact.png` | `/?open=new` | 新建弹窗 |
-| `05-import.png` | `/?open=import` | 导入弹窗 |
+| `01-home.png` | `/?theme=light` | 首页三栏 |
+| `02-starred.png` | `/?theme=light&view=starred` | 收藏夹 |
+| `03-detail.png` | `/?theme=light&contact=2` | 联系人详情 |
+| `04-new-contact.png` | `/?theme=light&open=new` | 新建弹窗 |
+| `05-import.png` | `/?theme=light&open=import` | 导入弹窗 |
 | `06-dark.png` | `/?theme=dark&view=starred` | 深色模式 |
-| `07-mobile.png` | `/?contact=2` | 窗口拉到 430px 宽 |
+| `07-mobile.png` | 430px 宽打开 `/` | 移动端列表 |
 | `08-git-log.png` | 终端执行 `git log --oneline --graph` | 提交历史 |
+| `09-import-result.png` | 导入 `docs/sample-import.xlsx` 后截结果弹窗 | 导入报告（新增 3 / 跳过 1 / 失败 1） |
+| `10-mobile-detail.png` | 430px 宽打开 `/?contact=2` | 移动端详情抽屉 |
 
 > 08 的提交历史截图要能看清「提交次数」，这是作业的硬性要求。
-> 如果导入结果报告想单独放一张，导入 `docs/sample-import.xlsx` 后截图即可（它会新增 3 条、跳过 1 条、失败 1 条）。
+> 仓库里已经附带了 10 张生成好的截图（`docs/screenshots/`），可以直接用；
+> 重新生成前先执行 `node scripts/seed.js` 重置数据，保证数字一致。
 
 ## 3. 录运行视频
 
@@ -68,7 +71,7 @@ npm test                # 17 条用例应全部通过
 
 ## 4. 推到 GitHub
 
-仓库已经在本地初始化并有 6 次提交（`git log --oneline` 可查看）。创建远端仓库后执行：
+仓库已经在本地初始化并有 8 次提交（`git log --oneline` 可查看）。创建远端仓库后执行：
 
 ```bash
 git remote add origin https://github.com/<你的用户名>/contact-hub.git
@@ -80,7 +83,8 @@ git push -u origin main
 
 - [ ] 仓库设为 **Public**（老师要能访问）
 - [ ] 不要提交 `data/`（已在 `.gitignore` 中）
-- [ ] 推完在网页上确认提交次数 ≥ 3，且能看到 6 次提交
+- [ ] 推完在网页上确认提交次数 ≥ 3，且能看到 8 次提交
+- [ ] 两位成员都用**各自的 GitHub 账号**提交过内容，博客里的「每人提交数」与 `git shortlog -sn` 一致
 - [ ] 两个人都用自己的 GitHub 账号至少提交一次，方便统计「每人提交数」
 
 ## 5. 部署到云服务器（+15 分，强烈建议做）

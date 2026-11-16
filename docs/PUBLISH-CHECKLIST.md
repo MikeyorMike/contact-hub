@@ -71,7 +71,7 @@ npm test                # 17 条用例应全部通过
 
 ## 4. 推到 GitHub
 
-仓库已经在本地初始化并有 8 次提交（`git log --oneline` 可查看）。创建远端仓库后执行：
+仓库已经在本地初始化并有 9 次提交（`git log --oneline` 可查看）。创建远端仓库后执行：
 
 ```bash
 git remote add origin https://github.com/<你的用户名>/contact-hub.git
@@ -83,7 +83,7 @@ git push -u origin main
 
 - [ ] 仓库设为 **Public**（老师要能访问）
 - [ ] 不要提交 `data/`（已在 `.gitignore` 中）
-- [ ] 推完在网页上确认提交次数 ≥ 3，且能看到 8 次提交
+- [ ] 推完在网页上确认提交次数 ≥ 3，且能看到 9 次提交
 - [ ] 两位成员都用**各自的 GitHub 账号**提交过内容，博客里的「每人提交数」与 `git shortlog -sn` 一致
 - [ ] 两个人都用自己的 GitHub 账号至少提交一次，方便统计「每人提交数」
 

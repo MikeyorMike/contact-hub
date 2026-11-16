@@ -70,13 +70,13 @@ node server.js
 | 7 | `fix: 修正整页高度与移动端抽屉布局` | 三栏独立滚动、移动端详情全屏、主题深链接 | 成员A |
 | 8 | `docs: 补充真实运行截图与截图流程` | 10 张运行截图与截图说明 | 成员A |
 | 9 | `docs: 更新提交历史截图并同步博客记录` | 重新生成下方截图，使其与仓库一致 | 成员A |
-| 10–15 | `feat: 增加 Render 一键部署与公网发布脚本` 等 | render.yaml、systemd/Nginx/Dockerfile、隧道脚本、线上地址、博客定稿 | 成员A |
+| 10–16 | `feat: 增加 Render 一键部署与公网发布脚本` 等 | render.yaml、systemd/Nginx/Dockerfile、隧道脚本、线上地址、博客定稿 | 成员A |
 
 | 贡献者 | GitHub 提交次数 | 贡献度 |
 | --- | --- | --- |
-| 成员A（张子乐，832401325） | 15 | 50% |
+| 成员A（张子乐，832401325） | 16 | 50% |
 | 成员B（周胜东，832401330） | 0（结对时由成员A 操作键盘提交） | 50% |
-| **合计** | **15** | **100%** |
+| **合计** | **16** | **100%** |
 
 > 两人采用 XP 的结对编程方式开发，同一台电脑上由一人操作键盘、另一人即时评审，
 > 因此 GitHub 的提交记录集中在成员A 的账号；贡献度按实际投入的工作量评估，双方各 50%。
@@ -380,7 +380,7 @@ fingerprints.add(`${normalizedName}|${String(email ?? '').trim().toLowerCase()}`
 
 **8. 移动端列表**
 
-![移动端](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/07-mobile.png?v=2)
+![移动端](https://gh-proxy.com/https://raw.githubusercontent.com/MikeyorMike/contact-hub/main/docs/screenshots/07-mobile.png)
 
 窄屏下侧栏变成横向导航，搜索框独占一行，卡片按可用宽度重新排布。
 

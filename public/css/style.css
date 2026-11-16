@@ -21,6 +21,7 @@
   --brand-soft: #eef2ff;
   --gold: #d97706;
   --gold-soft: #fef3c7;
+  --star-idle: #c3cddc;
   --danger: #e11d48;
   --danger-soft: #fff1f2;
   --ok: #059669;
@@ -58,6 +59,7 @@
   --brand-soft: rgba(129, 140, 248, 0.16);
   --gold: #fbbf24;
   --gold-soft: rgba(251, 191, 36, 0.14);
+  --star-idle: #3d4f6e;
   --danger: #fb7185;
   --danger-soft: rgba(251, 113, 133, 0.14);
   --ok: #34d399;
@@ -300,7 +302,20 @@ svg {
   display: grid;
   grid-template-columns: 236px minmax(360px, 408px) minmax(0, 1fr);
   height: calc(100vh - var(--topbar-h));
-  min-height: 0;
+  min-height: 0; /* 作为 flex 子项时允许收缩 */
+  overflow: hidden;
+}
+
+/* 桌面端：整页固定高度，三个面板各自滚动，避免列表把侧栏统计卡顶出视口 */
+@media (min-width: 981px) {
+  .app {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .shell {
+    height: auto;
+  }
 }
 
 /* 侧边栏 */
@@ -652,7 +667,7 @@ svg {
   border: 0;
   border-radius: 9px;
   background: transparent;
-  color: var(--line-strong);
+  color: var(--star-idle);
   transition: color 0.16s ease, background 0.16s ease, transform 0.16s ease;
 }
 
@@ -809,6 +824,7 @@ svg {
 .detail-name {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   font-size: 23px;
   font-weight: 700;
@@ -818,6 +834,8 @@ svg {
 .detail-star {
   display: inline-flex;
   align-items: center;
+  flex: none;
+  white-space: nowrap;
   padding: 2px 8px;
   border-radius: 999px;
   background: var(--gold-soft);
@@ -1445,6 +1463,11 @@ svg {
   background: linear-gradient(180deg, var(--surface-2), var(--surface));
 }
 
+.modal-head > div {
+  flex: 1;
+  min-width: 0;
+}
+
 .modal-head h2 {
   font-size: 17px;
   font-weight: 700;
@@ -1453,7 +1476,6 @@ svg {
 
 .modal-head p {
   margin-top: 3px;
-  max-width: 46ch;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.6;
@@ -1804,6 +1826,7 @@ svg {
   .shell {
     grid-template-columns: minmax(0, 1fr);
     height: auto;
+    overflow: visible;
   }
 
   .sidebar {
@@ -1843,15 +1866,16 @@ svg {
 
   .detail-pane {
     position: fixed;
-    inset: var(--topbar-h) 0 0 auto;
-    z-index: 40;
+    inset: 0;
+    z-index: 50;
     width: min(520px, 100%);
-    padding: 20px 20px 60px;
+    padding: 18px 20px 60px;
     border-left: 1px solid var(--line);
     background: var(--surface);
     transform: translateX(102%);
     transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: var(--shadow-lg);
+    overflow-y: auto;
   }
 
   .detail-pane.is-open {
@@ -1871,12 +1895,26 @@ svg {
   .topbar {
     flex-wrap: wrap;
     height: auto;
-    gap: 10px;
-    padding: 12px 16px;
+    gap: 8px;
+    padding: 10px 14px;
   }
 
   .brand-text small {
     display: none;
+  }
+
+  .topbar-actions {
+    gap: 5px;
+  }
+
+  .topbar-actions .btn {
+    height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .topbar-actions .btn .icon {
+    display: none; /* 窄屏只保留文字，给搜索框让位 */
   }
 
   .search {
@@ -1885,14 +1923,22 @@ svg {
     max-width: none;
   }
 
-  .topbar-actions {
-    gap: 6px;
+  .detail-head {
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .topbar-actions .btn {
-    height: 36px;
-    padding: 0 11px;
-    font-size: 12.5px;
+  .detail-identity {
+    flex: 1 1 auto;
+  }
+
+  .detail-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .detail-name {
+    font-size: 21px;
   }
 
   .shell {

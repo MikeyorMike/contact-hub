@@ -897,7 +897,8 @@ async function init() {
     if (contact) openForm(contact);
   }
   if (open === 'import') openImportModal();
-  if (params.get('theme') === 'dark') applyTheme('dark');
+  const themeParam = params.get('theme');
+  if (themeParam === 'dark' || themeParam === 'light') applyTheme(themeParam);
 }
 
 init();

@@ -33,11 +33,14 @@
 
 | 类型 | 地址 |
 | --- | --- |
-| GitHub 仓库 | https://github.com/&lt;your-github-name&gt;/contact-hub |
-| 代码规范 | [docs/CODE_STYLE.md](https://github.com/&lt;your-github-name&gt;/contact-hub/blob/main/docs/CODE_STYLE.md) |
-| 云服务器部署地址 | http://&lt;你的公网IP&gt;:3000 |
+| GitHub 仓库 | https://github.com/MikeyorMike/contact-hub |
+| 代码规范 | [docs/CODE_STYLE.md](https://github.com/MikeyorMike/contact-hub/blob/main/docs/CODE_STYLE.md) |
+| 线上部署地址（Render） | https://contact-hub-ogdm.onrender.com |
 | 演示视频 | &lt;B 站 / 网盘链接&gt; |
-| 接口文档 | [README.md · 接口文档](https://github.com/&lt;your-github-name&gt;/contact-hub#接口文档) |
+| 接口文档 | [README.md · 接口文档](https://github.com/MikeyorMike/contact-hub#接口文档) |
+
+> 部署在 Render 免费实例（新加坡节点），15 分钟无访问会休眠，第一次打开需要等 30–60 秒唤醒；
+> 免费实例没有持久磁盘，重启后数据会回到 12 位演示联系人。
 
 项目启动只需要一行命令（Node.js ≥ 22.5，无需 `npm install`）：
 
@@ -65,14 +68,16 @@ node server.js
 | 7 | `fix: 修正整页高度与移动端抽屉布局` | 三栏独立滚动、移动端详情全屏、主题深链接 | 成员A |
 | 8 | `docs: 补充真实运行截图与截图流程` | 10 张运行截图与截图说明 | 成员A |
 | 9 | `docs: 更新提交历史截图并同步博客记录` | 重新生成下方截图，使其与仓库一致 | 成员A |
+| 10–12 | `feat: 增加 Render 一键部署与公网发布脚本` 等 | render.yaml、systemd/Nginx/Dockerfile、隧道脚本、线上地址 | 成员A |
 
 | 贡献者 | 提交次数 |
 | --- | --- |
-| 成员A（Mikey） | 9 |
+| 成员A（Mikey） | 12 |
 | 成员B | 见仓库 `git shortlog -sn`（合并后统计） |
-| **合计** | **9** |
+| **合计** | **12** |
 
 > 说明：仓库要求提交次数 ≥ 3，实际按功能拆分提交，保证每次提交都可 `git checkout` 出来阅读。
+> 下方截图生成于第 8 次提交之后，后续几次文档 / 部署提交未出现在图中；
 > 若成员B 后续有独立提交，用 `git shortlog -sn` 更新上表即可。
 
 ## 三、功能实现思路
@@ -300,15 +305,23 @@ fingerprints.add(`${normalizedName}|${String(email ?? '').trim().toLowerCase()}`
 
 ### 3.7 部署上线
 
-项目对部署环境几乎没有要求：一个能跑 Node 22 的 Linux 机器即可。步骤见
-[README · 部署到云服务器](https://github.com/&lt;your-github-name&gt;/contact-hub#部署到云服务器)，核心是三步：
+项目对部署环境几乎没有要求：一台能跑 Node 22.5+ 的机器即可，不需要数据库服务，也不需要 `npm install`。
+这次实际选择了 **Render 免费 Web Service**（新加坡节点），因为它不需要买服务器、自带 HTTPS，
+并且可以用仓库里的 `render.yaml` 一键创建：
 
-1. 安装 Node 22，克隆仓库；
-2. 用 systemd 守护 `PORT=3000 DATA_DIR=/var/lib/contact-hub node server.js`；
-3. 安全组放行端口（或 Nginx 反代 80），用 `http://公网IP:3000` 访问。
+1. 代码推到 GitHub（`main` 分支）；
+2. Render → **New → Blueprint** → 选中仓库 → **Apply**；
+3. 约 2 分钟构建完成，得到 `https://contact-hub-ogdm.onrender.com`。
 
-数据落在 `DATA_DIR/contacts.db`，备份就是复制一个文件。健康检查接口 `/api/health`
-可以直接接到云监控的探活上。
+`render.yaml` 里固定了 `NODE_VERSION=24.11.0`（`node:sqlite` 需要 ≥ 22.5）和
+`DATA_DIR=/tmp/contact-hub-data`（免费实例没有持久磁盘），健康检查指向 `/api/health`。
+
+线上实际验证过：首页 200、`/api/health` 返回 `{"status":"ok"}`、`/api/contacts` 返回 12 位联系人、
+`/api/export` 下载的 xlsx 是合法的 ZIP 包。
+
+如果后续要更稳定（免费实例 15 分钟无访问会休眠、数据不持久），可以按
+[docs/DEPLOY.md](https://github.com/MikeyorMike/contact-hub/blob/main/docs/DEPLOY.md)
+换成云服务器 + systemd + Nginx，数据落在 `DATA_DIR/contacts.db`，备份就是复制一个文件。
 
 ## 四、程序截图与运行视频
 
@@ -376,11 +389,18 @@ fingerprints.add(`${normalizedName}|${String(email ?? '').trim().toLowerCase()}`
 
 ![提交历史](./screenshots/08-git-log.png)
 
-> 截图生成于第 8 次提交之后，因此图中未包含仅更新本图的第 9 次提交。
+> 截图生成于第 8 次提交之后；其后还有部署配置与文档提交，完整列表用 `git log --oneline` 查看。
+
+**11. 线上部署（Render）**
+
+![线上部署](./screenshots/11-online.png)
+
+https://contact-hub-ogdm.onrender.com 的实际访问效果：数据来自线上 SQLite，
+列表、详情、收藏统计与本地运行完全一致。
 
 **运行视频：** &lt;在此粘贴 B 站 / 网盘链接&gt;
 
-视频按 [docs/demo-script.md](https://github.com/&lt;your-github-name&gt;/contact-hub/blob/main/docs/demo-script.md)
+视频按 [docs/demo-script.md](https://github.com/MikeyorMike/contact-hub/blob/main/docs/demo-script.md)
 的分镜录制，依次演示收藏、多联系方式、搜索、导出 Excel、导入 Excel（含重复与失败行）、编辑删除、深色模式。
 
 ## 五、团队分工

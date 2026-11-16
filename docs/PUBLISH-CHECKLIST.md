@@ -19,8 +19,8 @@ npm test                # 17 条用例应全部通过
 
 | 位置 | 当前占位符 | 替换为 |
 | --- | --- | --- |
-| 一、项目地址 · GitHub 仓库 | `https://github.com/<your-github-name>/contact-hub` | 你的仓库地址（共 4 处） |
-| 一、项目地址 · 部署地址 | `http://<你的公网IP>:3000` | 云服务器访问地址，**不能是 localhost** |
+| 一、项目地址 · GitHub 仓库 | `https://github.com/MikeyorMike/contact-hub` | 已替换（共 4 处） |
+| 一、项目地址 · 部署地址 | `https://contact-hub-ogdm.onrender.com` | 已部署到 Render，**不能是 localhost** |
 | 一、项目地址 · 演示视频 | `<B 站 / 网盘链接>` | 视频链接（两处） |
 | 五、团队分工 | `<姓名>`、`<学号>` | 队友姓名与学号 |
 | 八、PSP 表 · 成员B | `<姓名>`、`<学号>` | 同上 |
@@ -74,7 +74,7 @@ npm test                # 17 条用例应全部通过
 仓库已经在本地初始化并有 9 次提交（`git log --oneline` 可查看）。创建远端仓库后执行：
 
 ```bash
-git remote add origin https://github.com/<你的用户名>/contact-hub.git
+git remote add origin https://github.com/MikeyorMike/contact-hub.git
 git branch -M main
 git push -u origin main
 ```

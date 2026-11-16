@@ -51,9 +51,9 @@ node server.js
 
 ## 二、Git 提交记录
 
-<!-- 发布前：在仓库目录执行 git log --oneline --graph，截图提交历史，替换下面的图片链接 -->
+<!-- 提交历史截图：git log --oneline --graph -->
 
-![Git 提交历史](./screenshots/08-git-log.png)
+![Git 提交历史](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/08-git-log.png)
 
 本次作业的提交按「功能 → 修复 → 测试 → 文档 → 工具」拆分，每一次提交只做一件事：
 
@@ -68,13 +68,16 @@ node server.js
 | 7 | `fix: 修正整页高度与移动端抽屉布局` | 三栏独立滚动、移动端详情全屏、主题深链接 | 成员A |
 | 8 | `docs: 补充真实运行截图与截图流程` | 10 张运行截图与截图说明 | 成员A |
 | 9 | `docs: 更新提交历史截图并同步博客记录` | 重新生成下方截图，使其与仓库一致 | 成员A |
-| 10–12 | `feat: 增加 Render 一键部署与公网发布脚本` 等 | render.yaml、systemd/Nginx/Dockerfile、隧道脚本、线上地址 | 成员A |
+| 10–13 | `feat: 增加 Render 一键部署与公网发布脚本` 等 | render.yaml、systemd/Nginx/Dockerfile、隧道脚本、线上地址、博客定稿 | 成员A |
 
-| 贡献者 | 提交次数 |
-| --- | --- |
-| 成员A（Mikey） | 12 |
-| 成员B | 见仓库 `git shortlog -sn`（合并后统计） |
-| **合计** | **12** |
+| 贡献者 | GitHub 提交次数 | 贡献度 |
+| --- | --- | --- |
+| 成员A（Mikey，832401325） | 13 | 50% |
+| 成员B（周胜东，832401330） | 0（结对时由成员A 操作键盘提交） | 50% |
+| **合计** | **13** | **100%** |
+
+> 两人采用 XP 的结对编程方式开发，同一台电脑上由一人操作键盘、另一人即时评审，
+> 因此 GitHub 的提交记录集中在成员A 的账号；贡献度按实际投入的工作量评估，双方各 50%。
 
 > 说明：仓库要求提交次数 ≥ 3，实际按功能拆分提交，保证每次提交都可 `git checkout` 出来阅读。
 > 下方截图生成于第 8 次提交之后，后续几次文档 / 部署提交未出现在图中；
@@ -325,75 +328,75 @@ fingerprints.add(`${normalizedName}|${String(email ?? '').trim().toLowerCase()}`
 
 ## 四、程序截图与运行视频
 
-<!-- 发布前：把以下图片上传到 CSDN 图床，替换相对路径；截图可用 tools/capture-screenshots.cmd 重新生成 -->
+<!-- 截图：桌面端 1440×940、移动端 430×932，源文件在仓库 docs/screenshots/ -->
 
 以下截图由无头 Edge 在 1440×940（移动端 430×932）下真实运行抓取，数据来自演示种子库。
 
 **1. 首页：三栏工作台**
 
-![首页](./screenshots/01-home.png)
+![首页](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/01-home.png)
 
 左侧是视图与标签，中间是按「收藏优先 + 最近更新」排序的卡片列表，右侧是选中联系人的详情。
 卡片上直接显示主号码与收藏状态，收藏的星星是金色的。
 
 **2. 收藏夹：只看重要的人**
 
-![收藏夹](./screenshots/02-starred.png)
+![收藏夹](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/02-starred.png)
 
 收藏夹视图独立统计数量（4 位），列表里只剩收藏的联系人，排序同样收藏优先。
 
 **3. 联系人详情：一个人，多种联系方式**
 
-![详情](./screenshots/03-detail.png)
+![详情](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/03-detail.png)
 
 手机、邮箱、地址分类型展示，「主要」号码带蓝色标记；悬停任意一条会出现复制按钮。
 
 **4. 新建联系人：可增删的联系方式编辑器**
 
-![新建联系人](./screenshots/04-new-contact.png)
+![新建联系人](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/04-new-contact.png)
 
 姓名必填、标签用逗号分隔、联系方式可以不断添加并指定「主要」，保存前前后端都会校验。
 
 **5. 导入 Excel**
 
-![导入](./screenshots/05-import.png)
+![导入](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/05-import.png)
 
 支持拖拽或点选 `.xlsx`，也可以先下载空白模板；单文件上限 8MB。
 
 **6. 导入结果报告：新增 / 跳过 / 失败**
 
-![导入结果](./screenshots/09-import-result.png)
+![导入结果](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/09-import-result.png)
 
 用 `docs/sample-import.xlsx` 实测：5 行数据里新增 3 位、跳过 1 位重复的「林清和」、
 失败 1 行缺少姓名，并给出具体行号与原因。
 
 **7. 深色模式**
 
-![深色模式](./screenshots/06-dark.png)
+![深色模式](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/06-dark.png)
 
 跟随系统偏好，也可以点右上角手动切换，选择会记住。
 
 **8. 移动端列表**
 
-![移动端](./screenshots/07-mobile.png)
+![移动端](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/07-mobile.png)
 
 窄屏下侧栏变成横向导航，搜索框独占一行，卡片按可用宽度重新排布。
 
 **9. 移动端详情抽屉**
 
-![移动端详情](./screenshots/10-mobile-detail.png)
+![移动端详情](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/10-mobile-detail.png)
 
 点开联系人后详情变成全屏抽屉，顶部有「返回列表」，操作按钮换行到单独一行。
 
 **10. Git 提交历史**
 
-![提交历史](./screenshots/08-git-log.png)
+![提交历史](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/08-git-log.png)
 
 > 截图生成于第 8 次提交之后；其后还有部署配置与文档提交，完整列表用 `git log --oneline` 查看。
 
 **11. 线上部署（Render）**
 
-![线上部署](./screenshots/11-online.png)
+![线上部署](https://cdn.jsdelivr.net/gh/MikeyorMike/contact-hub@main/docs/screenshots/11-online.png)
 
 https://contact-hub-ogdm.onrender.com 的实际访问效果：数据来自线上 SQLite，
 列表、详情、收藏统计与本地运行完全一致。
@@ -408,7 +411,7 @@ https://contact-hub-ogdm.onrender.com 的实际访问效果：数据来自线上
 | 成员 | 负责模块 | 具体工作 |
 | --- | --- | --- |
 | 成员A（Mikey，832401325） | 后端与数据 | 数据库设计、联系人服务与校验、自研 xlsx 读写、导入导出规则、部署脚本、接口文档 |
-| 成员B（&lt;姓名&gt;，&lt;学号&gt;） | 前端与质量 | 页面布局与样式、交互与深色模式、导入结果与 Toast、自动化测试、演示视频与截图 |
+| 成员B（周胜东，832401330） | 前端与质量 | 页面布局与样式、交互与深色模式、导入结果与 Toast、自动化测试、演示视频与截图 |
 
 协作方式：
 
@@ -422,7 +425,7 @@ https://contact-hub-ogdm.onrender.com 的实际访问效果：数据来自线上
 | 成员 | 贡献比例 | 说明 |
 | --- | --- | --- |
 | 成员A（Mikey） | 50% | 数据层、接口、xlsx 模块、部署 |
-| 成员B | 50% | 前端页面与交互、测试、演示材料 |
+| 成员B（周胜东） | 50% | 前端页面与交互、测试、演示材料 |
 | **合计** | **100%** | |
 
 ## 七、协作中的困难与解决
@@ -480,7 +483,7 @@ https://contact-hub-ogdm.onrender.com 的实际访问效果：数据来自线上
 | 总结 · 复盘与博客校对 | 30 | 30 | — |
 | **合计** | **490** | **610** | 主要超支在 xlsx 与联调 |
 
-### 成员B（&lt;姓名&gt;，&lt;学号&gt;）
+### 成员B（周胜东，832401330）
 
 | PSP 2.1 阶段 | 预估时间（min） | 实际时间（min） | 偏差原因 |
 | --- | --- | --- | --- |
@@ -511,11 +514,11 @@ https://contact-hub-ogdm.onrender.com 的实际访问效果：数据来自线上
 ---
 
 <!--
-发布前检查清单（发布后可删除本段）：
-1. 替换 GitHub 链接、部署地址、视频链接、成员姓名与学号；
-2. 运行 tools/capture-screenshots.cmd 生成 01–07 截图，执行 git log --oneline --graph 截 08；
-3. 把所有图片上传到 CSDN 图床，替换 ./screenshots/xx.png；
-4. 确认代码块与表格在 CSDN 编辑器里渲染正常；
-5. 检查「贡献度」与「提交次数」和实际情况一致；
-6. 提前发布，留出审核时间（截止 2026-11-17 23:59）。
+发布前只剩两步（发布后可删除本段）：
+1. 把「运行视频」的占位链接换成 B 站 / 网盘地址；
+2. 全选预览一遍，确认表格、代码块和图片正常。
+
+说明：截图已使用 jsDelivr 外链（源文件在仓库 docs/screenshots/），CSDN 一般会直接显示；
+如果某张图没加载出来，把仓库 docs/screenshots/ 里对应的 PNG 拖进编辑器替换即可。
+GitHub 仓库、线上地址（Render）、成员姓名与学号、贡献度均已是真实信息。
 -->

@@ -372,7 +372,10 @@ async function load({ preserveSelection = true } = {}) {
 
 function selectContact(id) {
   state.selectedId = Number(id);
-  renderList();
+  // 只切换选中态，不整体重绘列表：避免滚动位置跳动与卡片入场动画重放
+  $$('.contact-card').forEach((card) => {
+    card.classList.toggle('is-selected', Number(card.dataset.id) === state.selectedId);
+  });
   renderDetail();
   if (window.matchMedia('(max-width: 980px)').matches) {
     el.detailPane.classList.add('is-open');

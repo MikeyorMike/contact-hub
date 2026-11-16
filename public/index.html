@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>轻contacts · 通讯录</title>
+    <meta name="description" content="轻contacts —— 支持收藏、多联系方式与 Excel 导入导出的通讯录" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="轻contacts 首页">
+          <span class="brand-mark">轻</span>
+          <span class="brand-text">
+            <strong>轻contacts</strong>
+            <small>通讯录 · 极限编程</small>
+          </span>
+        </a>
+
+        <div class="search" role="search">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.6-3.6" />
+          </svg>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="搜索姓名、公司、标签或号码…"
+            autocomplete="off"
+            aria-label="搜索联系人"
+          />
+          <kbd class="search-kbd">Ctrl K</kbd>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="themeToggle" class="icon-btn" type="button" title="切换深色 / 浅色主题" aria-label="切换主题">
+            <span class="theme-icon" data-theme-icon="light">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v2m0 14v2M5.6 5.6 7 7m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4 7 17m10-10 1.4-1.4" />
+                <circle cx="12" cy="12" r="4" />
+              </svg>
+            </span>
+            <span class="theme-icon" data-theme-icon="dark" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+              </svg>
+            </span>
+          </button>
+          <button id="importBtn" class="btn btn-ghost" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 15V3m0 12 4-4m-4 4-4-4" />
+              <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+            </svg>
+            导入
+          </button>
+          <button id="exportBtn" class="btn btn-ghost" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12m0-12 4 4m-4-4-4 4" />
+              <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+            </svg>
+            导出
+          </button>
+          <button id="newBtn" class="btn btn-primary" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            新建联系人
+          </button>
+        </div>
+      </header>
+
+      <div class="shell">
+        <aside class="sidebar">
+          <nav class="nav" aria-label="联系人视图">
+            <button class="nav-item is-active" type="button" data-view="all">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M16 19v-1.5A3.5 3.5 0 0 0 12.5 14h-5A3.5 3.5 0 0 0 4 17.5V19" />
+                <circle cx="10" cy="8" r="3.2" />
+                <path d="M20 19v-1.5a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.2 3.2 0 0 1 0 5.6" />
+              </svg>
+              <span>全部联系人</span>
+              <span class="pill" id="countAll">0</span>
+            </button>
+            <button class="nav-item" type="button" data-view="starred">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.6-4.8 2.6.9-5.4L4.2 9.7l5.4-.8Z" />
+              </svg>
+              <span>收藏夹</span>
+              <span class="pill pill-gold" id="countStarred">0</span>
+            </button>
+          </nav>
+
+          <section class="sidebar-section">
+            <h4>标签</h4>
+            <div id="tagList" class="tag-cloud"></div>
+          </section>
+
+          <section class="sidebar-card">
+            <p class="eyebrow">通讯录概况</p>
+            <div class="stat-row"><span>联系人</span><strong id="statTotal">0</strong></div>
+            <div class="stat-row"><span>收藏</span><strong id="statStarred">0</strong></div>
+            <div class="stat-row"><span>联系方式</span><strong id="statMethods">0</strong></div>
+            <p class="tip">
+              按 <kbd>Ctrl</kbd> + <kbd>K</kbd> 快速搜索，数据保存在本地 SQLite。
+            </p>
+          </section>
+        </aside>
+
+        <main class="list-pane">
+          <div class="list-head">
+            <div class="list-title">
+              <h1 id="listTitle">全部联系人</h1>
+              <p id="listSubtitle">共 0 位联系人</p>
+            </div>
+            <label class="sort">
+              <span>排序</span>
+              <select id="sortSelect" aria-label="排序方式">
+                <option value="recent">最近更新</option>
+                <option value="name">姓名</option>
+                <option value="starred">收藏优先</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="contactList" class="contact-list" role="list"></div>
+
+          <div id="emptyState" class="empty is-hidden">
+            <div class="empty-art">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle cx="60" cy="60" r="44" class="empty-circle" />
+                <rect x="34" y="38" width="52" height="46" rx="8" class="empty-card" />
+                <circle cx="50" cy="55" r="7" class="empty-avatar" />
+                <path d="M40 73c2-6 6-9 10-9s8 3 10 9" class="empty-avatar" />
+                <path d="M68 52h12M68 60h9M68 68h12" class="empty-line" />
+              </svg>
+            </div>
+            <h3 id="emptyTitle">还没有联系人</h3>
+            <p id="emptyText">点击右上角「新建联系人」，或从 Excel 批量导入。</p>
+            <button class="btn btn-primary" type="button" data-action="new">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              新建联系人
+            </button>
+          </div>
+        </main>
+
+        <section class="detail-pane" id="detailPane" aria-live="polite"></section>
+      </div>
+    </div>
+
+    <!-- 新建 / 编辑联系人 -->
+    <div class="modal-root is-hidden" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+      <div class="modal-backdrop" data-close="form"></div>
+      <form class="modal" id="contactForm" novalidate>
+        <header class="modal-head">
+          <div>
+            <h2 id="formTitle">新建联系人</h2>
+            <p id="formSubtitle">一个联系人可以添加多个手机号、邮箱或社交账号。</p>
+          </div>
+          <button class="icon-btn" type="button" data-close="form" aria-label="关闭">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+
+        <div class="modal-body">
+          <div class="field-grid">
+            <label class="field">
+              <span>姓名 <em>*</em></span>
+              <input id="fieldName" name="name" type="text" maxlength="40" placeholder="例如：林清和" required />
+              <small class="field-error" data-error-for="name"></small>
+            </label>
+            <label class="field">
+              <span>公司 / 学校</span>
+              <input id="fieldCompany" name="company" type="text" maxlength="60" placeholder="例如：福州大学" />
+            </label>
+            <label class="field">
+              <span>职位</span>
+              <input id="fieldTitle" name="title" type="text" maxlength="60" placeholder="例如：教授 · 软件工程系" />
+            </label>
+            <label class="field">
+              <span>标签</span>
+              <input id="fieldTags" name="tags" type="text" maxlength="120" placeholder="老师, 校企（用逗号分隔）" />
+            </label>
+          </div>
+
+          <div class="field">
+            <span class="field-label">联系方式</span>
+            <div id="methodEditor" class="method-editor"></div>
+            <button class="btn btn-dashed" type="button" id="addMethodBtn">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+              添加联系方式
+            </button>
+            <small class="field-error" data-error-for="methods"></small>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>备注</span>
+              <textarea id="fieldNotes" name="notes" rows="3" maxlength="500" placeholder="补充说明，例如：需求评审对接口径…"></textarea>
+            </label>
+            <label class="switch-field">
+              <input id="fieldStarred" name="starred" type="checkbox" />
+              <span class="switch">
+                <span class="switch-track"><span class="switch-thumb"></span></span>
+                <span class="switch-text">
+                  <strong>加入收藏夹</strong>
+                  <small>重要的联系人可以置顶显示</small>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <footer class="modal-foot">
+          <span class="form-hint" id="formHint">带 * 的为必填项</span>
+          <div class="modal-actions">
+            <button class="btn btn-ghost" type="button" data-close="form">取消</button>
+            <button class="btn btn-primary" type="submit" id="saveBtn">保存</button>
+          </div>
+        </footer>
+      </form>
+    </div>
+
+    <!-- 导入 Excel -->
+    <div class="modal-root is-hidden" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importTitle">
+      <div class="modal-backdrop" data-close="import"></div>
+      <div class="modal modal-sm">
+        <header class="modal-head">
+          <div>
+            <h2 id="importTitle">导入 Excel</h2>
+            <p>支持 .xlsx 文件，表头需包含「姓名」，其余列按模板自动识别。</p>
+          </div>
+          <button class="icon-btn" type="button" data-close="import" aria-label="关闭">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+
+        <div class="modal-body">
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="选择或拖拽 Excel 文件">
+            <svg class="dropzone-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 16V4m0 0 4 4m-4-4L8 8" />
+              <path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4" />
+            </svg>
+            <p class="dropzone-title">把 Excel 拖到这里</p>
+            <p class="dropzone-sub">或点击选择文件 · 最大 8MB · 仅 .xlsx</p>
+            <input id="fileInput" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden />
+          </div>
+
+          <div class="import-hint">
+            <span>第一次导入？</span>
+            <a href="/api/export?template=1" id="templateLink">下载空白模板</a>
+          </div>
+
+          <div id="importProgress" class="import-progress is-hidden">
+            <span class="spinner" aria-hidden="true"></span>
+            <span>正在解析并导入，请稍候…</span>
+          </div>
+
+          <div id="importResult" class="import-result is-hidden"></div>
+        </div>
+
+        <footer class="modal-foot">
+          <span class="form-hint">重复的联系人（姓名 + 手机号相同）会自动跳过。</span>
+          <div class="modal-actions">
+            <button class="btn btn-ghost" type="button" data-close="import">完成</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- 删除确认 -->
+    <div class="modal-root is-hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+      <div class="modal-backdrop" data-close="confirm"></div>
+      <div class="modal modal-xs">
+        <div class="modal-body confirm-body">
+          <div class="confirm-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 9v4m0 4h.01" />
+              <path d="M10.3 4.3 2.8 17a2 2 0 0 0 1.7 3h15a2 2 0 0 0 1.7-3L13.7 4.3a2 2 0 0 0-3.4 0Z" />
+            </svg>
+          </div>
+          <h2 id="confirmTitle">删除联系人</h2>
+          <p id="confirmText">删除后不可恢复，确定继续吗？</p>
+        </div>
+        <footer class="modal-foot">
+          <div class="modal-actions">
+            <button class="btn btn-ghost" type="button" data-close="confirm">取消</button>
+            <button class="btn btn-danger" type="button" id="confirmDeleteBtn">删除</button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <div class="toast-host" id="toastHost" aria-live="polite"></div>
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>

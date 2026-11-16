@@ -1,0 +1,25 @@
+{
+  "name": "contact-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "轻contacts —— 极限编程通讯录（收藏联系人 / 多联系方式 / Excel 导入导出）",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node tests/run-tests.js",
+    "seed": "node scripts/seed.js"
+  },
+  "keywords": [
+    "address-book",
+    "contacts",
+    "sqlite",
+    "xlsx",
+    "extreme-programming"
+  ],
+  "license": "MIT"
+}

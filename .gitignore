@@ -23,3 +23,10 @@ npm-debug.log*
 # 临时文件（截图脚本、调试产物）
 .tmp-*
 tmp-*
+
+# 公网发布脚本的临时产物
+.lhr.*
+.serveo.*
+.tunnel.*
+.public-url.txt
+.server.log*

@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     一键抓取「轻contacts」演示截图（Windows + Microsoft Edge）
 

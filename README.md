@@ -200,6 +200,17 @@ npm test
 
 ## 部署到云服务器
 
+三种方式（细节见 [docs/DEPLOY.md](docs/DEPLOY.md)）：
+
+| 方式 | 适用场景 | 地址形态 |
+| --- | --- | --- |
+| Render Blueprint（免费） | 没有服务器，想快速拿到公网地址 | `https://xxx.onrender.com` |
+| 云服务器 + systemd | 要稳定、要拿「云部署」加分 | `http://公网IP:3000` |
+| SSH 隧道（临时） | 只是临时给老师看一眼 | `https://xxx.app.lhr.life` |
+
+Render 一键部署：仓库根目录的 `render.yaml` 已经准备好，把代码推到 GitHub 后，
+在 Render 里 **New → Blueprint** 选中仓库即可。
+
 以华为云 / 阿里云的 Ubuntu 22.04 为例（安全组需放行 80 或自定义端口）：
 
 ```bash

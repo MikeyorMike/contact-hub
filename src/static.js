@@ -66,6 +66,11 @@ export function createStaticHandler(rootDir) {
       res.end();
       return;
     }
-    createReadStream(filePath).pipe(res);
+    await new Promise((resolve, reject) => {
+      const stream = createReadStream(filePath);
+      stream.on('error', reject);
+      res.on('finish', resolve);
+      stream.pipe(res);
+    });
   };
 }
